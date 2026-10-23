@@ -25,9 +25,9 @@ uses: actions/checkout@v4
   - name: Configurar Android
     uses: android-actions/setup-android@v3
 
-  - name: Verificar archivos del proyecto
+  - name: Verificar archivos
     run: |
-      echo "Archivos encontrados:"
+      echo "Contenido del ZIP:"
       find proyecto -maxdepth 4 -type f | head -100
       echo "Buscando Gradle:"
       find proyecto -type f \( -name gradlew -o -name build.gradle -o -name settings.gradle \)
