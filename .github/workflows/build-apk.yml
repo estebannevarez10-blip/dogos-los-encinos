@@ -13,7 +13,7 @@ jobs:
       - name: Extraer proyecto
         run: |
           mkdir -p proyecto
-          unzip -o DogosProyecto.zip -d proyecto
+          unzip -o Dogosproyecto.zip -d proyecto
           find proyecto -type f -name gradlew
 
       - name: Configurar Java
