@@ -1,6 +1,6 @@
 name: Build Dogos Los Encinos APK
 
-on:
+'on':
 workflow_dispatch:
 
 jobs:
@@ -27,10 +27,7 @@ uses: actions/checkout@v4
 
   - name: Verificar archivos
     run: |
-      echo "Contenido del ZIP:"
-      find proyecto -maxdepth 4 -type f | head -100
-      echo "Buscando Gradle:"
-      find proyecto -type f \( -name gradlew -o -name build.gradle -o -name settings.gradle \)
+      find proyecto -maxdepth 5 -type f | head -100
 
   - name: Compilar APK
     run: |
