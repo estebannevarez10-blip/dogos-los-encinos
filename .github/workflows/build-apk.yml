@@ -32,16 +32,15 @@ jobs:
         run: |
           find proyecto -maxdepth 5 -type f | head -100
 
+      - name: Instalar Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
       - name: Compilar APK
         run: |
-          ROOT=$(find proyecto -type f -name gradlew | head -n 1)
-          if [ -z "$ROOT" ]; then
-            echo "ERROR: No se encontró gradlew dentro del ZIP."
-            exit 1
-          fi
-          cd "$(dirname "$ROOT")"
-          chmod +x gradlew
-          ./gradlew assembleDebug
+          cd proyecto
+          gradle assembleDebug
 
       - name: Guardar APK
         if: success()
