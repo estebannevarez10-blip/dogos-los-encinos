@@ -1,48 +1,48 @@
 name: Build Dogos Los Encinos APK
 
 'on':
-workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
-build:
-runs-on: ubuntu-latest
-steps:
-- name: Descargar proyecto
-uses: actions/checkout@v4
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar proyecto
+        uses: actions/checkout@v4
 
-  - name: Extraer proyecto
-    run: |
-      mkdir -p proyecto
-      unzip -o DogosProyecto.zip -d proyecto
-      find proyecto -type f -name gradlew
+      - name: Extraer proyecto
+        run: |
+          mkdir -p proyecto
+          unzip -o DogosProyecto.zip -d proyecto
+          find proyecto -type f -name gradlew
 
-  - name: Configurar Java
-    uses: actions/setup-java@v4
-    with:
-      distribution: temurin
-      java-version: '17'
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
-  - name: Configurar Android
-    uses: android-actions/setup-android@v3
+      - name: Configurar Android
+        uses: android-actions/setup-android@v3
 
-  - name: Verificar archivos
-    run: |
-      find proyecto -maxdepth 5 -type f | head -100
+      - name: Verificar archivos
+        run: |
+          find proyecto -maxdepth 5 -type f | head -100
 
-  - name: Compilar APK
-    run: |
-      ROOT=$(find proyecto -type f -name gradlew | head -n 1)
-      if [ -z "$ROOT" ]; then
-        echo "ERROR: No se encontró gradlew dentro del ZIP."
-        exit 1
-      fi
-      cd "$(dirname "$ROOT")"
-      chmod +x gradlew
-      ./gradlew assembleDebug
+      - name: Compilar APK
+        run: |
+          ROOT=$(find proyecto -type f -name gradlew | head -n 1)
+          if [ -z "$ROOT" ]; then
+            echo "ERROR: No se encontró gradlew dentro del ZIP."
+            exit 1
+          fi
+          cd "$(dirname "$ROOT")"
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
-  - name: Guardar APK
-    if: success()
-    uses: actions/upload-artifact@v4
-    with:
-      name: Dogos-Los-Encinos-APK
-      path: proyecto/**/app/build/outputs/apk/debug/*.apk
+      - name: Guardar APK
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Dogos-Los-Encinos-APK
+          path: proyecto/**/app/build/outputs/apk/debug/*.apk
